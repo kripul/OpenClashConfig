@@ -1,5 +1,5 @@
 payload:
-  - SRC-IP-CIDR,192.168.1.176/30
+#  - SRC-IP-CIDR,192.168.1.176/30
   - DOMAIN-SUFFIX,cdnst.net
   - DOMAIN-SUFFIX,cellmaps.com
   - DOMAIN-SUFFIX,ekahau.cloud
