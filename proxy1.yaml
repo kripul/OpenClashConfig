@@ -1,0 +1,10 @@
+proxies:
+- name: SOCK5
+  type: socks5
+  server: 170.39.230.128
+  port: 3500
+  udp: true
+  skip-cert-verify: true
+  tls: false
+  ip-version: ipv4
+  tfo: false
