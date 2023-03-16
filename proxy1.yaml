@@ -1,5 +1,5 @@
 proxies:
-- name: SOCK5
+- name: SOCK5 Second
   type: socks5
   server: 170.39.230.128
   port: 3500
