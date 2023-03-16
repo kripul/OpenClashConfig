@@ -18,3 +18,4 @@ payload:
   - DOMAIN-KEYWORD,speedtest
   - DOMAIN-KEYWORD,speedtestcustom
   - DOMAIN-KEYWORD,openspeedtest
+  - DOMAIN-SUFFIX,nixpoin.com
