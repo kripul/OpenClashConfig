@@ -1,13 +1,10 @@
-
-  rule-proxy-246:
-    type: http
-    behavior: classical
-    path: "./rule_provider/rule-provider-proxy-246.yaml"
-    url: https://raw.githubusercontent.com/kripul/OpenClashConfig/main/rule-provider-proxy-246.yaml
-    interval: 60
-  rule-noproxy-246:
-    type: http
-    behavior: classical
-    path: "./rule_provider/rule-provider-noproxy-246.yaml"
-    url: https://raw.githubusercontent.com/kripul/OpenClashConfig/main/rule-provider-noproxy-246.yaml
-    interval: 60
+proxies:
+- name: SOCK5 Second
+  type: socks5
+  server: 170.39.230.128
+  port: 3500
+  udp: true
+  skip-cert-verify: true
+  tls: false
+  ip-version: ipv4
+  tfo: false
