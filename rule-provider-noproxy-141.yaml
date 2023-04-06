@@ -18,5 +18,5 @@ payload:
   - DOMAIN-KEYWORD,speedtestcustom
   - DOMAIN-KEYWORD,openspeedtest
   - DOMAIN-SUFFIX,nixpoin.com
-  - DOMAIN-SUFFIX,ipinfo.io
+  - DOMAIN-SUFFIX,icanhazip.com
   - SRC-IP-CIDR,192.168.1.141/30
