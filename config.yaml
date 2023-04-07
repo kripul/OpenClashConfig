@@ -1,54 +1,135 @@
 ---
 proxy-groups:
-- name: NONPROXIED-CLIENT-166
+
+- name: PROXY-141
   type: select
   disable-udp: false
   proxies:
   - DIRECT
   use:
-  - Proxy-For-Client-166
-- name: PROXIED-CLIENT-166
+  - proxy-provider-141
+
+- name: PROXY-246
   type: select
   disable-udp: false
   proxies:
   - DIRECT
   use:
-  - Proxy-For-Client-166
+  - proxy-provider-246
+
+- name: PROXY-242
+  type: select
+  disable-udp: false
+  proxies:
+  - DIRECT
+  use:
+  - proxy-provider-242
+
+script:
+  shortcuts: 
+    direct-141: |
+      src_ip == "192.168.1.141" and match_provider("rule-noproxy-141")
+    direct-246: |
+      src_ip == "192.168.1.246" and match_provider("rule-noproxy-246")
+    direct-242: |
+      src_ip == "192.168.1.242" and match_provider("rule-noproxy-242")
+
+    proxy-141: |
+      src_ip == "192.168.1.141" and match_provider("rule-proxy-141")
+    proxy-246: |
+      src_ip == "192.168.1.246" and match_provider("rule-proxy-246")
+    proxy-242: |
+      src_ip == "192.168.1.242" and match_provider("rule-proxy-242")
+
+
 rules:
-- RULE-SET,rule-nonproxied-166,DIRECT
-- RULE-SET,rule-proxied-166,PROXIED-CLIENT-166
+- SCRIPT,direct-141,DIRECT
+- SCRIPT,direct-246,DIRECT
+- SCRIPT,direct-242,DIRECT
+
+- SCRIPT,proxy-141,PROXY-141
+- SCRIPT,proxy-246,PROXY-246
+- SCRIPT,proxy-242,PROXY-242
+#- RULE-SET,rule-noproxy-141,DIRECT
+#- RULE-SET,rule-noproxy-246,DIRECT
+#- RULE-SET,rule-noproxy-242,DIRECT
+#- RULE-SET,rule-proxy-141,PROXY-141
+#- RULE-SET,rule-proxy-246,PROXY-246
+#- RULE-SET,rule-proxy-242,PROXY-242
 - MATCH,GLOBAL
+
+
+
 rule-providers:
-  rule-proxied-166:
+  rule-proxy-141:
     type: http
     behavior: classical
-    path: "./rule_provider/rule-proxied"
-    url: https://raw.githubusercontent.com/kripul/OpenClashConfig/main/rule-proxied.yaml
+    path: "./rule_provider/rule-provider-proxy-141.yaml"
+    url: https://raw.githubusercontent.com/kripul/OpenClashConfig/main/rule-provider-proxy-141.yaml
     interval: 60
-  rule-nonproxied-166:
+
+  rule-noproxy-141:
     type: http
     behavior: classical
-    path: "./rule_provider/rule-nonproxied"
-    url: https://raw.githubusercontent.com/kripul/OpenClashConfig/main/rule-nonproxied.yaml
+    path: "./rule_provider/rule-provider-noproxy-141.yaml"
+    url: https://raw.githubusercontent.com/kripul/OpenClashConfig/main/rule-provider-noproxy-141.yaml
     interval: 60
+
+  rule-proxy-246:
+    type: http
+    behavior: classical
+    path: "./rule_provider/rule-provider-proxy-246.yaml"
+    url: https://raw.githubusercontent.com/kripul/OpenClashConfig/main/rule-provider-proxy-246.yaml
+    interval: 60
+  rule-noproxy-246:
+    type: http
+    behavior: classical
+    path: "./rule_provider/rule-provider-noproxy-246.yaml"
+    url: https://raw.githubusercontent.com/kripul/OpenClashConfig/main/rule-provider-noproxy-246.yaml
+    interval: 60
+
+
+  rule-proxy-242:
+    type: http
+    behavior: classical
+    path: "./rule_provider/rule-provider-proxy-242.yaml"
+    url: https://raw.githubusercontent.com/kripul/OpenClashConfig/main/rule-provider-proxy-242.yaml
+    interval: 60
+  rule-noproxy-242:
+    type: http
+    behavior: classical
+    path: "./rule_provider/rule-provider-noproxy-242.yaml"
+    url: https://raw.githubusercontent.com/kripul/OpenClashConfig/main/rule-provider-noproxy-242.yaml
+    interval: 60
+
 proxy-providers:
-  Proxy-For-Client-166:
-    type: file
-    path: "./proxy_provider/clientaproxy.yaml"
-    health-check:
-      enable: true
-      url: http://www.gstatic.com/generate_204
-      interval: 300
-  Proxy-For-Client-167:
+
+  proxy-provider-141:
     type: http
-    path: "./proxy_provider/Proxy1.yaml"
-    url: https://openclashconfig.pages.dev/proxy1.yaml
+    path: "./proxy_provider/proxy-provider-141.yaml"
+    url: https://raw.githubusercontent.com/kripul/OpenClashConfig/main/proxy-provider-141.yaml
     interval: 60
     health-check:
       enable: true
       url: http://www.gstatic.com/generate_204
       interval: 300
 
-mode: rule
-log-level: silent
-allow-lan: true
+  proxy-provider-246:
+    type: http
+    path: "./proxy_provider/proxy-provider-246.yaml"
+    url: https://raw.githubusercontent.com/kripul/OpenClashConfig/main/proxy-provider-246.yaml
+    interval: 60
+    health-check:
+      enable: true
+      url: http://www.gstatic.com/generate_204
+      interval: 300
+
+  proxy-provider-242:
+    type: http
+    path: "./proxy_provider/proxy-provider-242.yaml"
+    url: https://raw.githubusercontent.com/kripul/OpenClashConfig/main/proxy-provider-242.yaml
+    interval: 60
+    health-check:
+      enable: true
+      url: http://www.gstatic.com/generate_204
+      interval: 300
