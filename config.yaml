@@ -1,6 +1,6 @@
 ---
 proxy-groups:
-
+#create proxy group for each vm, we will use this proxy group for rules below
 - name: PROXY-141
   type: select
   disable-udp: false
@@ -25,6 +25,7 @@ proxy-groups:
   use:
   - proxy-provider-242
 
+# this is a magic code, we create a shortcut if a client with a specific ip connects to the internet according to our rule provider
 script:
   shortcuts: 
     direct-141: |
@@ -35,13 +36,13 @@ script:
       src_ip == "192.168.1.242" and match_provider("rule-noproxy-242")
 
     proxy-141: |
-      src_ip == "192.168.1.141" and match_provider("rule-proxy-141")
+      src_ip == "192.168.1.141" and match_provider("rule-proxy-all")
     proxy-246: |
-      src_ip == "192.168.1.246" and match_provider("rule-proxy-246")
+      src_ip == "192.168.1.246" and match_provider("rule-proxy-all")
     proxy-242: |
-      src_ip == "192.168.1.242" and match_provider("rule-proxy-242")
+      src_ip == "192.168.1.242" and match_provider("rule-proxy-all")
 
-
+# rules and rule provider are different
 rules:
 - SCRIPT,direct-141,DIRECT
 - SCRIPT,direct-246,DIRECT
@@ -50,24 +51,11 @@ rules:
 - SCRIPT,proxy-141,PROXY-141
 - SCRIPT,proxy-246,PROXY-246
 - SCRIPT,proxy-242,PROXY-242
-#- RULE-SET,rule-noproxy-141,DIRECT
-#- RULE-SET,rule-noproxy-246,DIRECT
-#- RULE-SET,rule-noproxy-242,DIRECT
-#- RULE-SET,rule-proxy-141,PROXY-141
-#- RULE-SET,rule-proxy-246,PROXY-246
-#- RULE-SET,rule-proxy-242,PROXY-242
 - MATCH,GLOBAL
 
 
-
+# we make provider rules that are used in the script section above. clash will download new config from http every 60 seconds interval
 rule-providers:
-  rule-proxy-141:
-    type: http
-    behavior: classical
-    path: "./rule_provider/rule-provider-proxy-141.yaml"
-    url: https://raw.githubusercontent.com/kripul/OpenClashConfig/main/rule-provider-proxy-141.yaml
-    interval: 60
-
   rule-noproxy-141:
     type: http
     behavior: classical
@@ -75,12 +63,6 @@ rule-providers:
     url: https://raw.githubusercontent.com/kripul/OpenClashConfig/main/rule-provider-noproxy-141.yaml
     interval: 60
 
-  rule-proxy-246:
-    type: http
-    behavior: classical
-    path: "./rule_provider/rule-provider-proxy-246.yaml"
-    url: https://raw.githubusercontent.com/kripul/OpenClashConfig/main/rule-provider-proxy-246.yaml
-    interval: 60
   rule-noproxy-246:
     type: http
     behavior: classical
@@ -88,19 +70,22 @@ rule-providers:
     url: https://raw.githubusercontent.com/kripul/OpenClashConfig/main/rule-provider-noproxy-246.yaml
     interval: 60
 
-
-  rule-proxy-242:
-    type: http
-    behavior: classical
-    path: "./rule_provider/rule-provider-proxy-242.yaml"
-    url: https://raw.githubusercontent.com/kripul/OpenClashConfig/main/rule-provider-proxy-242.yaml
-    interval: 60
   rule-noproxy-242:
     type: http
     behavior: classical
     path: "./rule_provider/rule-provider-noproxy-242.yaml"
     url: https://raw.githubusercontent.com/kripul/OpenClashConfig/main/rule-provider-noproxy-242.yaml
     interval: 60
+
+
+  rule-proxy-all:
+    type: http
+    behavior: classical
+    path: "./rule_provider/rule-provider-proxy-246.yaml"
+    url: https://raw.githubusercontent.com/kripul/OpenClashConfig/main/rule-provider-proxy-246.yaml
+    interval: 60
+
+
 
 proxy-providers:
 
